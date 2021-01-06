@@ -1,5 +1,8 @@
 ;;;; Am anfang des programms 
 #lang racket
+
+(require racket/trace)
+
 (print "Hello")
 
 ;;;
@@ -40,4 +43,35 @@ multi line kommentar
 
 ;;;;Listen
 
-(define liste '(1 2 3))
+(define liste '(1 2 3 4 5 6 7 8 9 10))
+(define liste2 '(s -3.3 #t))
+(define liste3 '(a b c '(#t #f #t)))
+
+(print "Die Liste ist:")
+(list? liste2)
+
+(car liste)
+(cdr liste)
+(car(cdr liste))
+
+(cadr liste)
+(caddr liste)
+
+;;;if-Statements
+(define (weniger-als-zehn ubergabe)
+    (if(< ubergabe 10) #t #f)
+    (if(< ubergabe 10) "Yes" "No")
+    )
+
+
+;Übung 1
+(define (Listenlänge lst)
+    (if (equal? lst '()) 0 (+ 1 (Listenlänge(cdr lst))))
+    )
+;(trace Listenlänge)
+
+;Übung 2 
+(define (Summe-Liste lst)
+    (if (equal? lst '()) 0 (+ (car lst ) (Summe-Liste(cdr lst))))
+    )
+(trace Summe-Liste)
