@@ -6,6 +6,14 @@
 
 (require racket/trace) ; damit kann man glaub ich verfolgen, wie etwas abgearbeitet wird
 
+
+;;-------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------
+
+
 (print "Hello")
 
 ;;;
@@ -60,119 +68,71 @@ multi line kommentar
 
 (define liste3 '(a b c '(#t #f #t))) ;Listen können listen enthalten
 
-;;Hauptoperationen für listen 
-;car <- übergibt das erste Element einer Liste
-;cdr <- übergibt die restlichen elemente einer Liste 
+;;=======Hauptoperationen für listen======== 
+;========car======== 
+;übergibt das erste Element einer Liste
 
 (car liste) ;hier wird 1 zurückgegeben
+
+;========cdr========
+;übergibt die restlichen elemente einer Liste 
+
 (cdr liste) ;hier wird  2 3 ausgegeben
+
+; =====cons=====
+;hängt das objekt an den Anfang der liste 
+
+(cons 1 '(2 3))
+
+; ====Append=====
+; verbinden von listen hintereinander
+
+(append '(1 2 3)'(4 5 6))
+
 (car(cdr liste)) ; hier wird das erste element der restliste ausgegeben
 
 (cadr liste)
 (caddr liste)
 
 
+
+
 ;;;if-Statements
+;Syntax: (if (hier den vergleich einfügen)
+;            (führe das aus)
+;            (führe das andere aus))
 (define (weniger-als-zehn ubergabe)
     (if(< ubergabe 10) #t #f)
     (if(< ubergabe 10) "Yes" "No") ; Man kann das ganze auch mit "Yes und No" machen
+    (if(< ubergabe 10)
+        "Yes"
+        "No")
     )
 
 ;;;Rekursion
 
+(define (sum lon)
+  (cond 
+  ((empty?)))
+)
 
 
+;;;; let 
+(let ((a 10)
+      (b 20)
+      (c 30))
+      (+ a b c))
+;60 ergebnis
+
+(let (( a +)
+      (b * ))
+      (a (b 10 20)(b 5 10)))
+;Ergbenis 250
 
 
+;;;; let*
 
-;;-------------------------------------------------------------------------------------
-;;-------------------------------------------------------------------------------------
-;;-------------------------------------------------------------------------------------
-;;-------------------------------------------------------------------------------------
-;;-------------------------------------------------------------------------------------
-
-;;;;Übung 1
-(define (Listenlänge lst)
-    (if (equal? lst '()) 0 (+ 1 (Listenlänge(cdr lst))))
-    )
-    ;; Wenn die Liste Leer ist dann gib 0 Zurück
-    ;; Wenn aber die Liste != 0 ist, dann wissen wir, dass wir mindestens ein Element haben
-    ;; und dann wir zu diesem Element, die Menge der Restlichen Listeninhalte addiert
-
-(define (Listenlänge lst)
-    (if (empty? lst) 0 (+ 1 (Listenlänge(cdr lst))))
-    )
-    ;; Vereinfachung mit "empty?" -> ist die liste Leer (Variante 2)
-
-(trace Listenlänge) ;Damit würde man das hier bekommen
-
-;>(Listenlänge '(1 2 3 4 5 6 7 8 9 10))
-;> (Listenlänge '(2 3 4 5 6 7 8 9 10))
-;> >(Listenlänge '(3 4 5 6 7 8 9 10))
-;> > (Listenlänge '(4 5 6 7 8 9 10))
-;> > >(Listenlänge '(5 6 7 8 9 10))
-;> > > (Listenlänge '(6 7 8 9 10))
-;> > > >(Listenlänge '(7 8 9 10))
-;> > > > (Listenlänge '(8 9 10))
-;> > > > >(Listenlänge '(9 10))
-;> > > > > (Listenlänge '(10))
-;> > > >[10] (Listenlänge '())
-;< < < <[10] 0
-;< < < < < 1
-;< < < < <2
-;< < < < 3
-;< < < <4
-;< < < 5
-;< < <6
-;< < 7
-;< <8
-;< 9
-;<10
-;10 
-
-
-
-;;;; Übung 2
-; Summe der Elemente einer Liste 
-
-(define (Summe-Liste lst)
-    (if (equal? lst '()) 0 (+ (car lst ) (Summe-Liste(cdr lst))))
-    )
-;(trace Summe-Liste)
-
-;Wie funktioniert der ganze Spaß:
-;man übergibt eine liste zu beginn 
-;sollte die Liste leer sein, ist ja auch die summe = 0 und es würde 0 zurück gegeben werden
-;wenn sie nicht 0 ist dann ruft sich die funktion wieder selbst auf und übergibt die komplette liste
-;BIS AUF DAS ERSTE ELEMENT -> cdr
-;Auch diese Liste wird wieder geprüft = 0 ?
-;das passiert immer wieder, bist man dann "am Ende" der Liste angekommen ist (also die liste = 0 ist)
-;und dann werden die jeweils ersten elemente der jeweilligen liste addiert
-
-;nach meinem verständnis öffnet man viele instanzen der selben funktion immer und immer wieder,
-;die dann miteinander interagieren
-; (in diesem Fall addiert werden)
-
-;>(Summe-Liste '(1 2 3 4 5 6 7 8 9 10))
-;> (Summe-Liste '(2 3 4 5 6 7 8 9 10))
-;> >(Summe-Liste '(3 4 5 6 7 8 9 10))
-;> > (Summe-Liste '(4 5 6 7 8 9 10))
-;> > >(Summe-Liste '(5 6 7 8 9 10))
-;> > > (Summe-Liste '(6 7 8 9 10))
-;> > > >(Summe-Liste '(7 8 9 10))
-;> > > > (Summe-Liste '(8 9 10))
-;> > > > >(Summe-Liste '(9 10))
-;> > > > > (Summe-Liste '(10))
-;> > > >[10] (Summe-Liste '())
-;< < < <[10] 0
-;< < < < < 10
-;< < < < <19
-;< < < < 27
-;< < < <34
-;< < < 40
-;< < <45
-;< < 49
-;< <52
-;< 54
-;<55
-;55
+(let* ((a 10)
+        (b (+ a 20)))
+        (* a b))
+;Ergebnis 300
