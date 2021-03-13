@@ -24,7 +24,7 @@ multi line kommentar
 ||#
 
 
-;;;Arithmetische operationen
+;;;============= Arithmetische operationen ============
 (+ 1 2)
 (- 7 9)
 (* 2 3.5)
@@ -32,7 +32,7 @@ multi line kommentar
 (print "Arithmetic operations")
 
 
-;;;sonstiges
+;;;================ sonstiges =======================
 
 (= 1 1) ; = Zeichen für Zahlen
 (equal? 'liste 'liste) ; "equal?" für alles andere (zum beispiel wie hier zum verlgeichen von Listen)
@@ -44,13 +44,15 @@ multi line kommentar
 (not #t)
 (print "Logic gates")
 
-;;;definieren von variablen
+;;;================ definieren von variablen =================
+
 (define *name* 2) ;(define *name der Variablen* wert der Variablen)
 (define *hello* "world") ;geht mit string, int etc.
 (print *hello*)
 (+ *name* 3)
 
-;;;Definieren einer Funktion
+;;; =================== Definieren einer Funktion ==============
+
 (define (*verdopplung* nummer) ;(define (*name der Funktion* Argument Argument ...) 
   (* 2 nummer));;;; dann kommen weitere anweisungen
 
@@ -58,7 +60,7 @@ multi line kommentar
   (+ nummer1 nummer2)
   )
 
-;;;;Listen
+;;;;==================== Listen ======================
 
 (define liste '(1 2 3 4 5 6 7 8 9 10)) ;(define *Listenname* HOCHKOMNMA "'" (Inhalt1 Inhalt2 Inhalt3))
 (define liste2 '(s -3.3 #t)) ;man kann die liste mit ganz viel komischen zeug voll laden
@@ -68,23 +70,26 @@ multi line kommentar
 
 (define liste3 '(a b c '(#t #f #t))) ;Listen können listen enthalten
 
-;;=======Hauptoperationen für listen======== 
-;========car======== 
+;;============= Hauptoperationen für listen ======== 
+;======================= car ======== 
 ;übergibt das erste Element einer Liste
 
 (car liste) ;hier wird 1 zurückgegeben
 
-;========cdr========
+;================ cdr ===============
+
 ;übergibt die restlichen elemente einer Liste 
 
 (cdr liste) ;hier wird  2 3 ausgegeben
 
-; =====cons=====
+; =============== cons =============
+
 ;hängt das objekt an den Anfang der liste 
 
 (cons 1 '(2 3))
 
-; ====Append=====
+; ============ Append ==============
+
 ; verbinden von listen hintereinander
 
 (append '(1 2 3)'(4 5 6))
@@ -97,7 +102,8 @@ multi line kommentar
 
 
 
-;;;if-Statements
+;;;======== if-Statements ===========
+
 ;Syntax: (if (hier den vergleich einfügen)
 ;            (führe das aus)
 ;            (führe das andere aus))
@@ -109,14 +115,15 @@ multi line kommentar
         "No")
     )
 
-;;;Rekursion
+;;;============== Rekursion ===========
 
+;; Die Funktion ruft sicher selber aus 
 (define (sum lon)
   (cond 
   ((empty?)))
 )
 
-
+;;;=============== let und let* ===========
 ;;;; let 
 (let ((a 10)
       (b 20)
@@ -136,3 +143,4 @@ multi line kommentar
         (b (+ a 20)))
         (* a b))
 ;Ergebnis 300
+

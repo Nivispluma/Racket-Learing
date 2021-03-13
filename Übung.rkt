@@ -150,3 +150,129 @@
 (trace revert)
 
 (revert '(1 2 3 4 5 6 7))
+
+
+
+;;;;============= Mergesort ================
+
+;Aufteilen in unterschiedliche Listen
+
+;Sortiert durch zusammenfügen
+
+#lang racket
+
+(require racket/trace)
+
+(define (split listesplit)
+    (if (= (car(listesplit)) 0)
+        '()
+        (if (= cdr(listesplit) 0)
+            listesplit
+            (let (
+                (a (list(car listesplit)))
+                )
+            (cdr(listesplit))
+            )
+        )    
+    )
+)
+
+(trace split)
+
+(split '(1 2 3 4))
+
+;===========================================================
+;===========================================================
+;===========================================================
+
+;;;;============= Mergesort 2. Fick versuch ================
+
+;Aufteilen in unterschiedliche Listen
+
+;Sortiert durch zusammenfügen
+
+(define (mix l1 l2)
+  (if (null? l1)
+      l2
+      (if (null? l2)
+          l1
+          (cons (car l1)
+                (cons (car l2)
+                      (mix (cdr l1) (cdr l2)))))))
+
+
+;;; Return the even-numbered elements of lst (starting with 0)
+
+(define (split1 lst)
+  (if (null? lst)
+      lst
+      (if (null? (cdr lst))
+          lst
+          (cons (car lst) (split1 (cdr (cdr lst)))))))
+
+
+;;; Return the odd-numbered elements of lst (starting with 1)
+
+(define (split2 lst)
+  (if (null? lst)
+      lst
+      (if (null? (cdr lst))
+          '()
+          (cons (car (cdr lst)) (split2 (cdr (cdr lst)))))))
+
+;;; Return sub-lists with even and odd elements
+
+(define (split lst)
+  (list (split1 lst) (split2 lst)))
+
+  ;;; Merge two sorted lists of numbers into one sorted list
+
+(define (merge lst1 lst2)
+  (cond ((null? lst1)
+         lst2)
+        ((null? lst2)
+         lst1)
+        (#t
+         (if (< (car lst1) (car lst2))
+             (cons (car lst1) (merge (cdr lst1) lst2))
+             (cons (car lst2) (merge lst1 (cdr lst2)))))))
+
+;;; Sort a list (of numbers) using the merge-sort algorithm
+
+(define (mergesort lst)
+  (if (or (null? lst) (null? (cdr lst)))
+      lst
+      (let* ((splt (split lst))
+             (srt1 (mergesort (car splt)))
+             (srt2 (mergesort (car (cdr splt)))))
+        (merge srt1 srt2))))
+
+;===========================================================
+;===========================================================
+;===========================================================
+
+;========= Skalarprodukt =========
+
+#lang racket
+
+(require racket/trace)
+
+(define (skalar lst1 lst2)
+    (apply + (map(lambda (x y) (* x y)) lst1 lst2))
+)
+
+;Macht beides das gleiche, aber die untere version ist kürzer. Und bei der obere ist das
+;lambda überflüssig, weil es ja schon eine funktion für die multiplikation gibt -> (* x y)
+;deshalb wäre die skalar2 funktion richtiger :D 
+
+(define (skalar2 lst1 lst2)
+    (apply + (map * lst1 lst2))
+)
+
+(skalar '(1 2 3) '(4 5 6))
+(skalar '(5 8 1 3 4) '(10 66 3 5 -2))
+(skalar '(2 3) '(5 6))
+
+(skalar2 '(1 2 3) '(4 5 6))
+(skalar2 '(5 8 1 3 4) '(10 66 3 5 -2))
+(skalar2 '(2 3) '(5 6))
